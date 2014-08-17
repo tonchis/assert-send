@@ -14,7 +14,7 @@ module WaitForIt
 
     res = catch(:executed) { yield; NOT_EXECUTED }
 
-    res == NOT_EXECUTED ? (raise ExpectationError) : res
+    res == NOT_EXECUTED ? (raise ExpectationError, "Expected #{object} to receive message #{message}") : res
   ensure
     metaclass.send(:undef_method, message)
     metaclass.send(:define_method, message, original)
