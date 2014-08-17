@@ -1,5 +1,8 @@
+require "securerandom"
+
 module WaitForIt
   ExpectationError = Class.new(StandardError)
+  NOT_EXECUTED = SecureRandom.uuid
 
   def wait_for_it(object, message, &block)
     metaclass = object.singleton_class
@@ -9,9 +12,9 @@ module WaitForIt
       throw(:executed, original.(*args))
     end
 
-    res = catch(:executed) { yield; :not_executed }
+    res = catch(:executed) { yield; NOT_EXECUTED }
 
-    res == :not_executed ? (raise ExpectationError) : res
+    res == NOT_EXECUTED ? (raise ExpectationError) : res
   ensure
     metaclass.send(:undef_method, message)
     metaclass.send(:define_method, message, original)
