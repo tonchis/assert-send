@@ -5,11 +5,7 @@ include WaitForIt
 
 class Foo
   def self.bar
-    :class_bar
-  end
-
-  def self.bar_params(wat)
-    wat
+    :bar
   end
 
   def bar
@@ -17,43 +13,36 @@ class Foo
   end
 end
 
-class Baz
-  def boom
-    Foo.bar
-  end
-
-  def no_boom
-    :sorry
-  end
-
-  def boom_params
-    Foo.bar_params("wat")
-  end
-end
-
 scope do
-  test "raise error if a method was not called" do
+  test "raise ExpectationError if the message was not passed" do
+    foo = Foo.new
+
     assert_raise(WaitForIt::ExpectationError) do
-      wait_for_it(Foo, :bar) {}
+      wait_for_it(foo, :bar) {}
     end
 
-    assert wait_for_it(Foo, :bar) { Foo.bar }
+    assert wait_for_it(foo, :bar) { foo.bar }
   end
 end
 
 scope do
+  class Baz
+    def yes
+      Foo.bar
+    end
+
+    def no
+      :sorry
+    end
+  end
+
   setup { Baz.new }
 
-  test "spots the call deep into the stack" do |baz|
-    assert wait_for_it(Foo, :bar) { baz.boom }
+  test "spots the message deep into the stack" do |baz|
+    assert wait_for_it(Foo, :bar) { baz.yes }
 
     assert_raise(WaitForIt::ExpectationError) do
-      wait_for_it(Foo, :bar) { baz.no_boom }
+      wait_for_it(Foo, :bar) { baz.no }
     end
   end
-
-  test "respect arguments in the call" do |baz|
-    assert wait_for_it(Foo, :bar_params) { baz.boom_params }
-  end
 end
-
