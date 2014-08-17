@@ -19,5 +19,6 @@ module WaitForIt
     metaclass.send(:undef_method, message)
     metaclass.send(:define_method, message, original)
   end
+  alias :w4it :wait_for_it
 end
 
