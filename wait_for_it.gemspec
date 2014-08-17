@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name = "wait_for_it"
-  s.version = "0.0.1"
+  s.version = "0.0.2"
   s.summary = "Easy message expectation for tests in Ruby"
   s.description = s.summary
   s.authors = ["Lucas Tolchinsky"]
