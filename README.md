@@ -1,4 +1,4 @@
-# Wait for it
+# AssertSend
 
 This little piece of work helps you know if an expected message was passed somewhere down your call stack.
 
