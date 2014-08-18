@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name = "assert-send"
-  s.version = "0.0.2"
+  s.version = "0.0.3"
   s.summary = "Easy message expectation for tests in Ruby"
   s.description = s.summary
   s.authors = ["Lucas Tolchinsky"]
