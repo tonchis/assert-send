@@ -7,6 +7,9 @@ Gem::Specification.new do |s|
   s.email = ["lucas.tolchinsky@gmail.com"]
   s.homepage = "https://github.com/tonchis/assert-send"
   s.license = "MIT"
+
   s.files = `git ls-files`.split("\n")
+
   s.add_development_dependency "cutest"
+  s.add_development_dependency "mocoso"
 end
