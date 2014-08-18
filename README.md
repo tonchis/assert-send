@@ -22,6 +22,6 @@ If you're looking to stub things, I suggest you having a look at [frodsan/mocoso
 
 ### Installation
 
-```bash
+```
 gem install wait-for-it
 ```
