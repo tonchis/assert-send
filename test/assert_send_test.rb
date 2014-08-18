@@ -1,7 +1,7 @@
 require "cutest"
-require_relative "../lib/wait_for_it"
+require_relative "../lib/assert_send"
 
-include WaitForIt
+include AssertSend
 
 scope do
   class Foo
@@ -13,11 +13,11 @@ scope do
   test "raise ExpectationError if the message was not passed" do
     foo = Foo.new
 
-    assert_raise(WaitForIt::ExpectationError) do
-      wait_for_it(foo, :bar) {}
+    assert_raise(AssertSend::ExpectationError) do
+      assert_send(foo, :bar) {}
     end
 
-    assert wait_for_it(foo, :bar) { foo.bar }
+    assert assert_send(foo, :bar) { foo.bar }
   end
 end
 
@@ -41,10 +41,10 @@ scope do
   setup { Baz.new }
 
   test "spots the message deep into the stack" do |baz|
-    assert wait_for_it(Foo, :bar) { baz.yes }
+    assert assert_send(Foo, :bar) { baz.yes }
 
-    assert_raise(WaitForIt::ExpectationError) do
-      wait_for_it(Foo, :bar) { baz.no }
+    assert_raise(AssertSend::ExpectationError) do
+      assert_send(Foo, :bar) { baz.no }
     end
   end
 end
@@ -61,10 +61,10 @@ scope do
   end
 
   test "dont mess with the execution chain" do
-    wait_for_it(Numberz, :one) do
+    assert_send(Numberz, :one) do
       assert_equal 5, Numberz.successor(4)
     end
 
-    assert_equal 5, wait_for_it(Numberz, :one) { Numberz.successor(4) }
+    assert_equal 5, assert_send(Numberz, :one) { Numberz.successor(4) }
   end
 end

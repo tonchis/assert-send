@@ -1,7 +1,7 @@
-module WaitForIt
+module AssertSend
   ExpectationError = Class.new(StandardError)
 
-  def wait_for_it(object, message, &block)
+  def assert_send(object, message, &block)
     metaclass = object.singleton_class
     original = object.method(message)
     executed = nil
@@ -18,6 +18,5 @@ module WaitForIt
     metaclass.send(:undef_method, message)
     metaclass.send(:define_method, message, original)
   end
-  alias :w4it :wait_for_it
 end
 
